@@ -52,6 +52,14 @@ module.exports = function(grunt) {
           args.push(key, value);
         });
 
+        // Add string params from callback function
+        if (typeof options.stringparamsFunc == 'function') {
+          grunt.util._.forOwn(options.stringparamsFunc(file), function(value, key) {
+            args.push('--stringparam');
+            args.push(key, value);
+          });
+        }
+
         // Add XInclude support
         if (options.xinclude) {
           args.push('--xinclude');
